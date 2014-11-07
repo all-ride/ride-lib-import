@@ -54,6 +54,23 @@ class GenericMapper implements Mapper {
     }
 
     /**
+     * Maps all column which have the same name in the source and destination
+     * @param \ride\library\orm\provider\SourceProvider $sourceProvider
+     * @param \ride\library\orm\provider\DestinationProvider $destinationProvider
+     * @return null
+     */
+    public function mapColumns(SourceProvider $sourceProvider, DestinationProvider $destinationProvider) {
+        $sourceColumns = $sourceProvider->getColumnNames();
+        $destinationColumns = $destinationProvider->getColumnNames();
+
+        foreach ($sourceColumns as $sourceColumnName) {
+            if (isset($destinationColumns[$sourceColumnName])) {
+                $this->mapColumn($sourceColumnName, $sourceColumnName);
+            }
+        }
+    }
+
+    /**
      * Adds a decorator for the provided destination column
      * @param string $destinationColumn Name of the destination column
      * @param \ride\library\decorator\Decorator $decorator Decorator to apply
