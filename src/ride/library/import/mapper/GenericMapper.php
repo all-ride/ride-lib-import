@@ -54,6 +54,23 @@ class GenericMapper implements Mapper {
     }
 
     /**
+     * Unmaps a column
+     * @param string $destinationColumn Name of the destination column
+     * @return boolean True when the columns has been unmapped, false it was not
+     * mapped
+     */
+    public function unmapColumn($destinationColumn) {
+        if (!isset($this->columnMap[$destinationColumn])) {
+            return false;
+        }
+
+        unset($this->columnMap[$destinationColumn]);
+        unset($this->glueMap[$destinationColumn]);
+
+        return true;
+    }
+
+    /**
      * Maps all column which have the same name in the source and destination
      * @param \ride\library\orm\provider\SourceProvider $sourceProvider
      * @param \ride\library\orm\provider\DestinationProvider $destinationProvider
