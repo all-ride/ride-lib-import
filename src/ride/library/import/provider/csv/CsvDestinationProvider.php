@@ -12,6 +12,15 @@ use ride\library\import\Importer;
 class CsvDestinationProvider extends AbstractCsvProvider implements DestinationProvider {
 
     /**
+     * Sets the column names for the first row of the output
+     * @param array $columnNames Value of getColumnNames of the source provider
+     * @return null
+     */
+    public function setColumnNames(array $columnNames) {
+        $this->columnNames = $columnNames;
+    }
+
+    /**
      * Performs preparation tasks of the import
      * @param \ride\library\import\Importer $importer
      * @return null
@@ -26,6 +35,10 @@ class CsvDestinationProvider extends AbstractCsvProvider implements DestinationP
         $this->handle = fopen($this->file->getAbsolutePath(), 'w');
         if ($this->handle === false) {
             throw new ImportException('Could not open ' . $this->file . ' for writing');
+        }
+
+        if ($this->columnNames) {
+            $thios->setRow($this->columnNames);
         }
     }
 
