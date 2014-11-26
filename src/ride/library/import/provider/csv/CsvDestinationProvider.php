@@ -38,7 +38,7 @@ class CsvDestinationProvider extends AbstractCsvProvider implements DestinationP
         }
 
         if ($this->columnNames) {
-            $thios->setRow($this->columnNames);
+            $this->setRow($this->columnNames);
         }
     }
 
