@@ -65,7 +65,7 @@ abstract class AbstractCsvProvider implements Provider {
      * @return null
      */
     public function setFile(File $file) {
-        $this->postImport();
+        $this->closeFile();
 
         $this->file = $file;
         $this->columnNames = array();
@@ -159,6 +159,14 @@ abstract class AbstractCsvProvider implements Provider {
      * @return null
      */
     public function postImport() {
+        $this->closeFile();
+    }
+
+    /**
+     * Closes the handle to the file if open
+     * @return null
+     */
+    protected function closeFile() {
         if ($this->handle) {
             fclose($this->handle);
         }
