@@ -21,11 +21,9 @@ class XlsDestinationProvider extends CsvDestinationProvider {
 
     public function preImport(Importer $importer) {
         parent::preImport($importer);
-        $fs = $this->getFile()->getFileSystem();
-        $xls = $this->fileBrowser->getApplicationDirectory()->getChild('data/destinationFiles/Actors.xls');
-        var_dump($xls);
+        $fileName=  explode('.csv', $this->getFile()->getName());
+        $xls = $this->fileBrowser->getApplicationDirectory()->getChild('data/destinationFiles/' . $fileName[0] . '.xls');
         $this->xls = $xls;
-        var_dump($this->xls);
     }
 
     /**
