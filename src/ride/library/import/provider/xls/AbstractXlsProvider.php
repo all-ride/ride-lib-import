@@ -167,8 +167,4 @@ abstract class AbstractXlsProvider implements Provider {
             fclose($this->handle);
         }
     }
-
-    public function getNextColumnNumber($col) {
-        $chars = array('a-z');
-    }
 }
