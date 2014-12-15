@@ -11,8 +11,9 @@
     ],
     "require": {
         "ride/lib-common": ">=0.1.0",
-        "ride/lib-system": ">=0.3.0"
-    },
+        "ride/lib-system": ">=0.3.0",
+		"phpoffice/phpexcel": "*"
+	},
     "autoload": {
         "psr-0": {
             "ride\\library\\import\\": ["src/"]
