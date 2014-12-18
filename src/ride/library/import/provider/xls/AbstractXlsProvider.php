@@ -7,12 +7,12 @@ use ride\library\system\System;
 use PHPExcel;
 
 /**
- * Abstract import provider for the CSV file format
+ * Abstract import provider for the XLS file format
  */
 abstract class AbstractXlsProvider implements Provider {
 
     /**
-     * Filename
+     * rowNumber
      * @var Int
      */
     protected $rowNumber;
@@ -58,8 +58,7 @@ abstract class AbstractXlsProvider implements Provider {
      * @param \ride\library\system\file\File $file
      * @return null
      */
-    public function __construct(System $system, $fileName) {
-        $this->fileName = $fileName;
+    public function __construct(System $system) {
         $this->system = $system;
     }
 
@@ -82,20 +81,6 @@ abstract class AbstractXlsProvider implements Provider {
     }
 
     /**
-     * @return String
-     */
-    public function getFileName() {
-        return $this->fileName;
-    }
-
-    /**
-     * @param String $fileName
-     */
-    public function setFileName($fileName) {
-        $this->fileName = $fileName;
-    }
-
-    /**
      * Sets the row number
      * @param string $row Number of the current row
      * @return Int
@@ -113,7 +98,7 @@ abstract class AbstractXlsProvider implements Provider {
     }
 
     /**
-     * @return PHPExcel
+     * @return PHPExcel Object.
      */
     public function getExcel() {
         return $this->excel;

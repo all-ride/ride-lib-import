@@ -8,6 +8,10 @@ use ride\library\import\provider\DestinationProvider;
 use PHPExcel;
 use PHPExcel_Writer_Excel2007;
 
+/*
+ * Destination provider for the XLS file type.
+ * This Provider uses the PHPExcel library to produce an XLS file.
+ */
 class XlsDestinationProvider extends AbstractXlsProvider implements DestinationProvider
 {
 
@@ -66,6 +70,7 @@ class XlsDestinationProvider extends AbstractXlsProvider implements DestinationP
 
     /**
      * Performs finishing tasks of the import
+     * Writes the PHPExcel object to a file.
      * @return null
      */
     public function postImport() {
