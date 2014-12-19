@@ -4,6 +4,7 @@ namespace ride\library\import\provider\xls;
 
 use ride\library\import\provider\Provider;
 use ride\library\system\System;
+
 use PHPExcel;
 
 /**
@@ -24,7 +25,7 @@ abstract class AbstractXlsProvider implements Provider {
     protected $fileName;
 
     /**
-     * Instance of the CSV file
+     * File
      * @var \ride\library\system\file\File
      */
     protected $file;

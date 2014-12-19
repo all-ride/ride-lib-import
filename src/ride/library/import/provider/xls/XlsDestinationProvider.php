@@ -5,6 +5,7 @@ namespace ride\library\import\provider\xls;
 use ride\library\import\Importer;
 use ride\library\import\exception\ImportException;
 use ride\library\import\provider\DestinationProvider;
+
 use PHPExcel;
 use PHPExcel_Writer_Excel2007;
 
@@ -12,27 +13,24 @@ use PHPExcel_Writer_Excel2007;
  * Destination provider for the XLS file type.
  * This Provider uses the PHPExcel library to produce an XLS file.
  */
-class XlsDestinationProvider extends AbstractXlsProvider implements DestinationProvider
-{
+
+class XlsDestinationProvider extends AbstractXlsProvider implements DestinationProvider {
 
     /**
      * Sets the column names for the first row of the output
      * @param array $columnNames Value of getColumnNames of the source provider
      * @return null
      */
-    public function setColumnNames(array $columnNames)
-    {
+    public function setColumnNames(array $columnNames) {
         $this->columnNames = $columnNames;
     }
 
     /**
      * Performs preparation tasks of the import
      * @param \ride\library\import\Importer $importer
-     * @throws ImportException
      * @return null
      */
-    public function preImport(Importer $importer)
-    {
+    public function preImport(Importer $importer) {
         if ($this->handle) {
             return;
         }
@@ -47,13 +45,10 @@ class XlsDestinationProvider extends AbstractXlsProvider implements DestinationP
 
     /**
      * Imports a row into this destination
-     * @param array $row Array with the name of the column as key and theπ
-     * value to import as value
-     * @throws ImportException
+     * @param array $row Array with the name of the column as key and the value to import as value
      * @return null
      */
-    public function setRow(array $row)
-    {
+    public function setRow(array $row) {
         $rowNumber = $this->getRowNumber();
         $excel = $this->getExcel();
         $sheet = $excel->getSheet();
