@@ -65,7 +65,6 @@ abstract class AbstractXlsProvider implements Provider {
      */
     public function setFile(File $file) {
         $this->file = $file;
-        $this->closeFile();
     }
 
     /**
@@ -118,6 +117,15 @@ abstract class AbstractXlsProvider implements Provider {
     }
 
     /**
+     * Sets the column names for the first row of the output
+     * @param array $columnNames Value of getColumnNames of the source provider
+     * @return null
+     */
+    public function setColumnNames(array $columnNames) {
+        $this->columnNames = $columnNames;
+    }
+
+    /**
      * Gets the available columns for this provider
      * @return array Array with the name of the column as key and as value
      */
@@ -129,23 +137,5 @@ abstract class AbstractXlsProvider implements Provider {
         }
 
         return $columns;
-    }
-
-    /**
-     * Performs finishing tasks of the import
-     * @return null
-     */
-    public function postImport() {
-        $this->closeFile();
-    }
-
-    /**
-     * Closes the handle to the file if open
-     * @return null
-     */
-    protected function closeFile() {
-        if ($this->handle) {
-            fclose($this->handle);
-        }
     }
 }
