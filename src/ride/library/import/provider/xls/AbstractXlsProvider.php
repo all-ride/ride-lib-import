@@ -3,6 +3,7 @@
 namespace ride\library\import\provider\xls;
 
 use ride\library\import\provider\Provider;
+use ride\library\system\file\File;
 use ride\library\system\System;
 
 use PHPExcel;
@@ -13,16 +14,10 @@ use PHPExcel;
 abstract class AbstractXlsProvider implements Provider {
 
     /**
-     * rowNumber
+     * Number of the row
      * @var Int
      */
     protected $rowNumber;
-
-    /**
-     * Filename
-     * @var String
-     */
-    protected $fileName;
 
     /**
      * File
@@ -68,7 +63,7 @@ abstract class AbstractXlsProvider implements Provider {
      * @param \ride\library\system\file\File $file
      * @return null
      */
-    public function setFile($file) {
+    public function setFile(File $file) {
         $this->file = $file;
         $this->closeFile();
     }
