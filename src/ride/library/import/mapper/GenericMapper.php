@@ -193,7 +193,9 @@ class GenericMapper implements Mapper {
                         }
                     }
 
-                    $value .= $glue . $sourceRow[$sourceColumnName];
+                    if ('' . $sourceRow[$sourceColumnName] != '') {
+                        $value .= $glue . $sourceRow[$sourceColumnName];
+                    }
                 }
             }
 
