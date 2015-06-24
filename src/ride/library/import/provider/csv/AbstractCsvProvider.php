@@ -2,13 +2,14 @@
 
 namespace ride\library\import\provider\csv;
 
-use ride\library\import\provider\Provider;
+use ride\library\import\exception\ImportException;
+use ride\library\import\provider\FileProvider;
 use ride\library\system\file\File;
 
 /**
  * Abstract import provider for the CSV file format
  */
-abstract class AbstractCsvProvider implements Provider {
+abstract class AbstractCsvProvider implements FileProvider {
 
     /**
      * Instance of the CSV file
@@ -51,8 +52,10 @@ abstract class AbstractCsvProvider implements Provider {
      * @param \ride\library\system\file\File $file
      * @return null
      */
-    public function __construct(File $file) {
-        $this->setFile($file);
+    public function __construct(File $file = null) {
+        if ($file) {
+            $this->setFile($file);
+        }
 
         $this->delimiter = ',';
         $this->enclosure = '"';
@@ -76,6 +79,10 @@ abstract class AbstractCsvProvider implements Provider {
      * @return \ride\library\system\file\File
      */
     public function getFile() {
+        if (!$this->file) {
+            throw new ImportException('Could not get the file: no file set');
+        }
+
         return $this->file;
     }
 
