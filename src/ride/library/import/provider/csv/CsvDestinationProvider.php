@@ -30,15 +30,16 @@ class CsvDestinationProvider extends AbstractCsvProvider implements DestinationP
             return;
         }
 
-        $this->file->getParent()->create();
+        $file = $this->getFile();
+        $file->getParent()->create();
 
-        $this->handle = fopen($this->file->getAbsolutePath(), 'w');
+        $this->handle = fopen($file->getAbsolutePath(), 'w');
         if ($this->handle === false) {
-            throw new ImportException('Could not open ' . $this->file . ' for writing');
+            throw new ImportException('Could not open ' . $file . ' for writing');
         }
 
         if ($this->columnNames) {
-            $this->setRow($this->columnNames);
+            $this->writeRow($this->columnNames);
         }
     }
 
@@ -50,21 +51,52 @@ class CsvDestinationProvider extends AbstractCsvProvider implements DestinationP
      */
     public function setRow(array $row) {
         if (!$this->handle) {
-            throw new ImportException('Could not set row to destination ' . $this->file . ': file is not opened, call prepareImport first');
+            throw new ImportException('Could not set row to destination ' . $this->getFile() . ': file is not opened, call prepareImport first');
         }
 
-        $data = array();
+        // fill rows
+        $data = array(array());
 
         foreach ($this->columnNames as $columnIndex => $columnName) {
-            if (isset($row[$columnName])) {
-                $data[$columnIndex] = $row[$columnName];
+            $rowIndex = 0;
+
+            if (!isset($row[$columnName])) {
+                continue;
+            }
+
+            if (is_array($row[$columnName])) {
+                do {
+                    $data[$rowIndex][$columnIndex] = array_shift($row[$columnName]);
+                    $rowIndex++;
+                } while ($row[$columnName]);
             } else {
-                $data[$columnIndex] = null;
+                $data[$rowIndex][$columnIndex] = $row[$columnName];
             }
         }
 
+        // normalize rows
+        foreach ($data as $rowIndex => $columns) {
+            foreach ($this->columnNames as $columnIndex => $columnName) {
+                if (!isset($columns[$columnIndex])) {
+                    $data[$rowIndex][$columnIndex] = null;
+                }
+            }
+        }
+
+        // write rows
+        foreach ($data as $row) {
+            $this->writeRow($row);
+        }
+    }
+
+    /**
+     * Writes a row to the file
+     * @param array $data Data of the row
+     * @return null
+     */
+    protected function writeRow(array $data) {
         if (fputcsv($this->handle, $data, $this->delimiter, $this->enclosure) === false) {
-            throw new ImportException('Could not write row to destination ' . $this->file . ': CSV input error');
+            throw new ImportException('Could not write row to destination ' . $this->getFile() . ': CSV input error');
         }
     }
 

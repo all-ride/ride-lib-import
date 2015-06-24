@@ -111,7 +111,7 @@ class GenericMapper implements Mapper {
      * @throws \ride\library\import\exception\ImportException
      */
     protected function validateColumnName($columnName) {
-        if ((!is_string($columnName) && !is_numeric($columnName)) || $columnName < 0 || $columnName == '') {
+        if ((!is_string($columnName) && !is_numeric($columnName)) || $columnName < 0 || $columnName === '') {
             throw new ImportException('Could not map column: provided column name is invalid');
         }
     }

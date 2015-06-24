@@ -42,7 +42,7 @@ class CsvSourceProvider extends AbstractCsvProvider implements SourceProvider {
      */
     public function getRow() {
         if (!$this->handle) {
-            throw new ImportException('Could not get row for source ' . $this->file . ': file is not opened, call preImport first');
+            throw new ImportException('Could not get row for source ' . $this->getFile() . ': file is not opened, call preImport first');
         }
 
         $result = array();
@@ -72,13 +72,15 @@ class CsvSourceProvider extends AbstractCsvProvider implements SourceProvider {
             return;
         }
 
-        if (!$this->file->exists() || $this->file->isDirectory()) {
-            throw new ImportException('Could not open the file of the source provider: ' . $this->file . ' does not exist or is a directory');
+        $file = $this->getFile();
+
+        if (!$file->exists() || $file->isDirectory()) {
+            throw new ImportException('Could not open the file of the source provider: ' . $file . ' does not exist or is a directory');
         }
 
-        $this->handle = fopen($this->file->getAbsolutePath(), 'r');
+        $this->handle = fopen($file->getAbsolutePath(), 'r');
         if ($this->handle === false) {
-            throw new ImportException('Could not open ' . $this->file . ' for reading');
+            throw new ImportException('Could not open ' . $file . ' for reading');
         }
     }
 
