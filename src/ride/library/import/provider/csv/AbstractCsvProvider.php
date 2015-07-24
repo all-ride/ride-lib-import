@@ -176,6 +176,8 @@ abstract class AbstractCsvProvider implements FileProvider {
     protected function closeFile() {
         if ($this->handle) {
             fclose($this->handle);
+
+            $this->handle = null;
         }
     }
 
