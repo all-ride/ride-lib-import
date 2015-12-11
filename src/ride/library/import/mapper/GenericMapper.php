@@ -29,8 +29,24 @@ class GenericMapper implements Mapper {
     /**
      * Map with the destination column name as key and a array with decorator
      * instances as value
+     * @var array
      */
     protected $decoratorMap = array();
+
+    /**
+     * Flag to see if empty values should be glued
+     * @var boolean
+     */
+    protected $willGlueEmpty = false;
+
+    /**
+     * Sets the flag to glue empty values
+     * @param boolean $willGlueEmpty
+     * @return null
+     */
+    public function setWillGlueEmpty($willGlueEmpty) {
+        $this->willGlueEmpty = $willGlueEmpty;
+    }
 
     /**
      * Maps a column from the source provider to the destination provider
@@ -180,7 +196,7 @@ class GenericMapper implements Mapper {
                     $isFirstColumn = false;
                 } else {
                     // additional value, glue together
-                    if (empty($sourceRow[$sourceColumnName])) {
+                    if (!$this->willGlueEmpty && empty($sourceRow[$sourceColumnName])) {
                         continue;
                     }
 
@@ -193,7 +209,7 @@ class GenericMapper implements Mapper {
                         }
                     }
 
-                    if ('' . $sourceRow[$sourceColumnName] != '') {
+                    if ($this->willGlueEmpty || '' . $sourceRow[$sourceColumnName] != '') {
                         $value .= $glue . $sourceRow[$sourceColumnName];
                     }
                 }
