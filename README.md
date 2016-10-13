@@ -63,3 +63,20 @@ function importFile(File $sourceFile, File $destinationFile) {
     $importer->import();
 }
 ```
+
+## Related Modules
+
+- [ride/lib-common](https://github.com/all-ride/ride-lib-log)
+- [ride/lib-import-database](https://github.com/all-ride/ride-lib-import-database)
+- [ride/lib-import-excel](https://github.com/all-ride/ride-lib-import-excel)
+- [ride/lib-import-orm](https://github.com/all-ride/ride-lib-import-orm)
+- [ride/lib-common](https://github.com/all-ride/ride-lib-log)
+- [ride/lib-system](https://github.com/all-ride/ride-lib-system)
+
+## Installation
+
+You can use [Composer](http://getcomposer.org) to install this library.
+
+```
+composer require ride/lib-import
+```
